@@ -2,6 +2,7 @@
   <div>
     <CenterRevealMask :visible="showMask">
       <img src="/meswin.png" alt="图片丢失" class="bg">
+      <meswinName :name="currentName" class="Meswinname" />
       <textarea :readonly="isWaiting" name="dialog-textarea" id="dialog-textarea" class="dialog-textarea"
         v-model="dialogText" @keyup="sendTextToWS" ref="textareaRef"></textarea>
       <SpritePlayer v-if="!isWaiting" src="/ring.png" :rows="12" :columns="5" :fps="45" :width="spriteSize"
@@ -12,8 +13,9 @@
 </template>
 
 <script setup lang="js">
+import meswinName from '@/component/meswinName.vue';
 import { useHomeStore } from '@/stores/home';
-import { ref, onMounted, nextTick, onUnmounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import CenterRevealMask from '../component/CenterRevealMask.vue'
 import SpritePlayer from '../component/SpritePlayer.vue'
@@ -21,7 +23,7 @@ import SpritePlayer from '../component/SpritePlayer.vue'
 import getCaretCoordinates from 'textarea-caret';
 
 const homeStore = useHomeStore()
-const { textQueue, isWaiting } = storeToRefs(homeStore)
+const { textQueue, isWaiting, currentName } = storeToRefs(homeStore)
 const WS = homeStore.WS
 const showMask = ref(false)
 
@@ -80,6 +82,14 @@ onMounted(() => {
 </script>
 
 <style>
+.Meswinname {
+  position: absolute;
+  bottom: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
 .dialog-textarea {
   background: rgba(0, 0, 0, 0.0);
   color: #e6e6e6;

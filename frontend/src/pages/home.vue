@@ -1,17 +1,20 @@
 <template>
   <div class="home-page">
+    <div v-if="wsStatus !== 'connected'" class="ws-status-tip">WebSocket连接失效，正在尝试连接...</div>
     <dialogBox class="dialog" />
+    <illustration class="illustrat" />
     <div class="meswin-bg"></div>
   </div>
 </template>
 
 <script setup>
+import illustration from './illustration.vue'
 import dialogBox from './dialogBox.vue'
 import { onMounted } from 'vue'
 import { useHomeStore } from '@/stores/home'
-
-// 音频播放相关
-const { audioQueue } = useHomeStore()
+import { storeToRefs } from 'pinia'
+const homeStore = useHomeStore()
+const { audioQueue, wsStatus } = storeToRefs(homeStore)
 
 const playAudio = (blob) => {
   return new Promise((resolve) => {
@@ -69,6 +72,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.illustrat {
+  position: absolute;
+}
+
 .home-page {
   background-image: url('/bg.png');
   background-size: cover;
@@ -76,6 +83,26 @@ onMounted(() => {
   background-repeat: no-repeat;
   min-height: 100vh;
   position: relative;
+}
+
+.ws-status-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  color: #e6a23c;
+  font-family: 'Microsoft YaHei', 'SimHei', '黑体', 'STHeiti', sans-serif;
+  font-size: 2.1vw;
+  text-shadow: 2px 2px 6px #000, 0 0 1px #fff;
+  padding: 0.5em 0;
+  border: none;
+  border-bottom: 2px solid #e6a23c;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  box-sizing: border-box;
+  background: none;
+  z-index: 10;
 }
 
 .dialog {

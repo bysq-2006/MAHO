@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "pinia": "^3.0.4",
+    "pixi.js": "^8.14.3",
     "textarea-caret": "^3.1.0",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"

@@ -19,4 +19,6 @@ translator:
   baidu_api:
     appid: "20251129002508470"
     appkey: "0zK0AZwp2hCmbiOoAtCI"
+  argos_api: # 本地部署的argos翻译服务，第一次使用需要先联网下载模型
+    to_lang: "ja"  # 目标语言，默认日语
 
